@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tik_shopping/screens/sign_in.dart';
+import 'package:tik_shopping/screens/sign_up.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -27,7 +29,7 @@ class _HomeState extends State<Home> {
   Widget signInButton() {
     return Container(
       child: FlatButton(
-        color: Colors.brown[700],
+        color: Colors.yellow[800],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -35,7 +37,13 @@ class _HomeState extends State<Home> {
           'Sign In',
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: () {},
+        onPressed: () {
+          print('You Click SignIn');
+
+          var signInRoute =
+              MaterialPageRoute(builder: (BuildContext context) => SignIn());
+          Navigator.of(context).push(signInRoute);
+        },
       ),
     );
   }
@@ -50,7 +58,12 @@ class _HomeState extends State<Home> {
           color: Colors.blue[700],
         ),
         child: Text('Sign Up'),
-        onPressed: () {},
+        onPressed: () {
+          var signUpRoute = MaterialPageRoute(
+            builder: (BuildContext context) => SignUp(),
+          );
+          Navigator.of(context).push(signUpRoute);
+        },
       ),
     );
   }
