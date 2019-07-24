@@ -7,16 +7,32 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 //  Explicit
-
+double myWidth =200.0;
 // Method
   Widget showAppName() {
-    return Text('Tik Shopping');
+    return Text(
+      'Tik Shopping',
+      style: TextStyle(
+        fontSize: 30.0,
+        color: Colors.red,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 
   Widget signInButton() {
-    return RaisedButton(
-      child: Text('Sign In'),
-      onPressed: () {},
+    return Container(width:200.0,
+      child: FlatButton(
+        color: Colors.green[700],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: Text(
+          'Sign In',
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () {},
+      ),
     );
   }
 
