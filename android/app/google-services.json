@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "677329547387",
+    "firebase_url": "https://tikshopping.firebaseio.com",
+    "project_id": "tikshopping",
+    "storage_bucket": "tikshopping.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677329547387:android:7f92fcba6bcf340c",
+        "android_client_info": {
+          "package_name": "th.co.vinpoint.tik.tik_shopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677329547387-4ebudoq0ard6serlkg7dqoibjl462lij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzna65HkRegQwxnoqye3kHZuuorhHdOPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677329547387-4ebudoq0ard6serlkg7dqoibjl462lij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
