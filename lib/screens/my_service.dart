@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tik_shopping/screens/home.dart';
+
 
 class MyService extends StatefulWidget {
   @override
@@ -32,6 +34,7 @@ class _MyServiceState extends State<MyService> {
       child: ListView(
         children: <Widget>[
           headDrawer(),
+          mySignOut(),
         ],
       ),
     );
@@ -42,7 +45,8 @@ class _MyServiceState extends State<MyService> {
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [Colors.white, Colors.purple],
-          center: Alignment.topLeft,radius: 2.0,
+          center: Alignment.topLeft,
+          radius: 2.0,
         ),
       ),
       child: Column(
@@ -53,6 +57,23 @@ class _MyServiceState extends State<MyService> {
         ],
       ),
     );
+  }
+
+  Widget mySignOut() {
+    return ListTile(
+      leading: Icon(Icons.exit_to_app),
+      title: Text('SignOut'),
+      onTap: () {
+        processSignOut();
+      },
+    );
+  }
+
+  Future<void> processSignOut() async {
+    await firebaseAuth.signOut().then((response) {
+      var homeRoute = MaterialPageRoute(builder: (BuildContext context)=> Home());
+      Navigator.of(context).pushAndRemoveUntil(homeRoute, (Route<dynamic>route)=>false);
+    });
   }
 
   Widget showLogo() {

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tik_shopping/screens/my_service.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -7,11 +9,14 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   // Explicit
+
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   double myPadding = 20.0;
   String nameString, emailString, passwordString;
+  final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
-
-   Widget showAppName() {
+  Widget showAppName() {
     return Container(
       margin: EdgeInsets.only(bottom: 8.0),
       child: Text(
@@ -26,24 +31,21 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-
   Widget emailText() {
     return Container(
       padding: EdgeInsets.only(left: myPadding, right: myPadding),
       child: TextFormField(
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
+          helperStyle: TextStyle(color: Colors.red),
+          hintText: 'you@email.com',
           labelText: 'Email :',
+          helperText: 'you@email.com',
           icon: Icon(
             Icons.email,
             size: 40.0,
           ),
         ),
-        validator: (String value) {
-          if (!((value.contains('@')) && (value.contains('.')))) {
-            return 'Please Type Email Format';
-          }
-        },
         onSaved: (String value) {
           emailString = value;
         },
@@ -51,23 +53,22 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Widget nameText() {
+  Widget passwordText() {
     return Container(
       padding: EdgeInsets.only(left: myPadding, right: myPadding),
       child: TextFormField(
+        obscureText: true,
         decoration: InputDecoration(
-            labelText: 'Name :',
-            icon: Icon(
-              Icons.face,
-              size: 40.0,
-            )),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Please Fill Name in Blank';
-          }
-        },
+          helperStyle: TextStyle(color: Colors.red),
+          labelText: 'Password :',
+          helperText: 'More 6 Charactor',
+          icon: Icon(
+            Icons.vpn_key,
+            size: 40.0,
+          ),
+        ),
         onSaved: (String value) {
-          nameString = value;
+          passwordString = value;
         },
       ),
     );
@@ -85,33 +86,55 @@ class _SignInState extends State<SignIn> {
           style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
-          print('You Click SignIn');
-
-          var signInRoute =
-              MaterialPageRoute(builder: (BuildContext context) => SignIn());
-          Navigator.of(context).push(signInRoute);
+          formKey.currentState.save();
+          checkAuthen();
         },
       ),
     );
   }
 
+  Future<void> checkAuthen() async {
+    await firebaseAuth
+        .signInWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((response) {
+      var homeRoute =
+          MaterialPageRoute(builder: (BuildContext context) => MyService());
+      Navigator.of(context)
+          .pushAndRemoveUntil(homeRoute, (Route<dynamic> route) => false);
+    }).catchError((response) {
+      String errorString = response.message;
+      mySnackBar(errorString);
+    });
+  }
+
+  void mySnackBar(String messageString) {
+    SnackBar snackBar = SnackBar(
+      content: Text(messageString),
+    );
+    scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text('Sign In'),
         backgroundColor: Colors.purple[300],
       ),
-      body: Container(child: Column(
+      body: Form(
+        key: formKey,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             showAppName(),
             emailText(),
-            nameText(),
+            passwordText(),
             signInButton(),
           ],
         ),
-        alignment: Alignment.center,),
+      ),
     );
   }
 }

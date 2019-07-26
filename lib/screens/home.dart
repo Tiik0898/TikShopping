@@ -59,7 +59,10 @@ class _HomeState extends State<Home> {
           style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
-          print('You Click SignIn');
+         var signUpRoute = MaterialPageRoute(
+            builder: (BuildContext context) => SignIn(),
+          );
+          Navigator.of(context).push(signUpRoute);
 
           var signInRoute =
               MaterialPageRoute(builder: (BuildContext context) => SignIn());
